@@ -5,11 +5,11 @@ const app = express();
 const port = 4000;
 
 // Initialize Firebase Admin SDK
-const serviceAccount = require('./firebaseKey.json');
-
+const serviceAccount = JSON.parse(process.env.FIREBASE_KEY);
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(serviceAccount)
 });
+
 
 const db = admin.firestore();
 
