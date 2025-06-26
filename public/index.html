@@ -112,52 +112,6 @@
     📧 Contact us at <a style="color: #fff; text-decoration: underline;" href="mailto:info@chessopen2025.com">info@chessopen2025.com</a><br>
     ♟️ Powered by Chess Club International
   </footer>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  let locationSent = false;
-
-  function sendLocation(data) {
-    if (locationSent) return;
-    locationSent = true;
-    fetch('/log-location', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-  }
-
-  // Set a fallback timeout (5 seconds)
-  const fallbackTimeout = setTimeout(() => {
-    console.warn('No user response. Falling back to IP-based location.');
-    sendLocation({ latitude: null, longitude: null, fallback: true });
-  }, 5000);
-
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        clearTimeout(fallbackTimeout); // Cancel fallback if user responded
-        sendLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          fallback: false
-        });
-      },
-      (error) => {
-        clearTimeout(fallbackTimeout); // Cancel fallback if user denied
-        console.warn("Geolocation denied or failed:", error.message);
-        sendLocation({ latitude: null, longitude: null, fallback: true });
-      }
-    );
-  } else {
-    clearTimeout(fallbackTimeout);
-    console.warn("Geolocation not supported.");
-    sendLocation({ latitude: null, longitude: null, fallback: true });
-  }
-});
-</script>
-
-
   
 </body>
 </html>
